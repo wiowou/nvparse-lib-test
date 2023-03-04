@@ -1,4 +1,4 @@
-#include <array>
+#include <vector>
 #include <fstream>
 
 #include "lest/lest.hpp"
@@ -41,7 +41,7 @@ void compare_files(lest::env &lest_env, std::string filename) {
 const lest::test specification[] = {
     CASE( "read, parse, print, comparison" )
     {
-        std::array<std::string, 1> filenames = { "index1.html" };
+        std::vector<std::string> filenames = { "index1.html" };
         for (auto filename : filenames)
             compare_files(lest_env, filename);
     },
