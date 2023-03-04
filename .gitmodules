@@ -1,0 +1,3 @@
+[submodule "libs/nvparse-lib"]
+	path = libs/nvparse-lib
+	url = ssh://git@github.com/wiowou/nvparse-lib.git
