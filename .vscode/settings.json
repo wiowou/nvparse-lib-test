@@ -55,7 +55,18 @@
     "cinttypes": "cpp",
     "typeinfo": "cpp",
     "list": "cpp",
-    "forward_list": "cpp"
+    "forward_list": "cpp",
+    "bitset": "cpp",
+    "chrono": "cpp",
+    "condition_variable": "cpp",
+    "optional": "cpp",
+    "regex": "cpp",
+    "future": "cpp",
+    "mutex": "cpp",
+    "semaphore": "cpp",
+    "stop_token": "cpp",
+    "thread": "cpp",
+    "variant": "cpp"
   }
 } // {
 //   "files.associations": {
