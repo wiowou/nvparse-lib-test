@@ -3,9 +3,10 @@
 
 #include "lest/lest.hpp"
 
-#include "nvparse-lib/node.hpp"
-#include "nvparse-lib/read.hpp"
+#include "nvparse-lib/document.hpp"
+#include "nvparse-lib/file.hpp"
 #include "nvparse-lib/print.hpp"
+#include "nvparse-lib/selectors.hpp"
 
 void path_to_string(std::string path, std::string &content) {
     std::ifstream fs(path.c_str());
@@ -20,10 +21,10 @@ std::string pages_exp("../pages-exp/");
 void compare_files(lest::env &lest_env, std::string filename) {
     std::cout << "checking: " << filename;
     SETUP(filename.c_str()) {
-        nvparsehtml::File<char> html_file((pages_src + filename).c_str());
+        nvparsehtml::File<char> html_file(pages_src + filename);
         EXPECT( html_file.data() != nullptr );
-        nvparsehtml::DocumentNode<char> doc;
-        doc.parse(html_file.data());
+        nvparsehtml::DocumentNode<char> doc(html_file);
+        nvparsehtml::Selector<char> selector(&doc);
         EXPECT( doc.children_size() == 2 );
 
         std::fstream out((pages_out + filename).c_str(), std::ios::out);
@@ -47,7 +48,6 @@ const lest::test specification[] = {
     },
 };
 
-int main( int argc, char * argv[] )
-{
+int main( int argc, char * argv[] ) {
     return lest::run( specification, argc, argv );
 }
