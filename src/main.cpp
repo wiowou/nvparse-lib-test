@@ -1,3 +1,4 @@
+#include <string>
 #include <vector>
 #include <fstream>
 
@@ -6,7 +7,8 @@
 #include "nvparse-lib/document.hpp"
 #include "nvparse-lib/file.hpp"
 #include "nvparse-lib/print.hpp"
-#include "nvparse-lib/selectors.hpp"
+#include "nvparse-lib/document_index.hpp"
+#include "nvparse-lib/selector.hpp"
 
 void path_to_string(std::string path, std::string &content) {
     std::ifstream fs(path.c_str());
@@ -24,7 +26,7 @@ void compare_files(lest::env &lest_env, std::string filename) {
         nvparsehtml::File<char> html_file(pages_src + filename);
         EXPECT( html_file.data() != nullptr );
         nvparsehtml::DocumentNode<char> doc(html_file);
-        nvparsehtml::Selector<char> selector(&doc);
+        nvparsehtml::DocumentIndex<char> indexer(&doc);
         EXPECT( doc.children_size() == 2 );
 
         std::fstream out((pages_out + filename).c_str(), std::ios::out);
@@ -40,11 +42,16 @@ void compare_files(lest::env &lest_env, std::string filename) {
 }
 
 const lest::test specification[] = {
-    CASE( "read, parse, print, comparison" )
+    CASE("read, parse, print, comparison")
     {
         std::vector<std::string> filenames = { "index1.html" };
         for (auto filename : filenames)
             compare_files(lest_env, filename);
+    },
+    CASE("read and parse CSS selector expression")
+    {
+        std::string expression(" #foo > .bar + div.k1.k2 [id='baz']:hello(2):not(:where(#yolo))::before");
+        nvparsehtml::Selector selector(expression);
     },
 };
 
