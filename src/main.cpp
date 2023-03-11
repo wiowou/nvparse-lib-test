@@ -50,6 +50,11 @@ const lest::test specification[] = {
     },
     CASE("read and parse CSS selector expression")
     {
+        std::string expression("[ id = 'baz' ]");
+        nvparsehtml::Selector selector(expression);
+    },
+    CASE("read and parse CSS selector expression")
+    {
         std::string expression(" #foo > .bar + div.k1.k2 [id='baz']:hello(2):not(:where(#yolo))::before");
         nvparsehtml::Selector selector(expression);
     },
